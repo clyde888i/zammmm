@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For my baby Zammmmmmieeeee 🌹</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root {
+            --bg-color: #fce7f3;
+            --card-bg: #fffcfd;
+            --primary-text: #6b214c;
+            --secondary-text: #9d174d;
+            --petal-gradient-start: #ffb6c1;
+            --petal-gradient-end: #ff69b4;
+            --shadow-color: rgba(107, 33, 76, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+        }
+
+        .flower-petal {
+            position: absolute;
+            width: 70px;
+            height: 50px;
+            border-radius: 50px 50px 10px 10px;
+            background: linear-gradient(180deg, var(--petal-gradient-start), var(--petal-gradient-end));
+            transform-origin: 50% 100%;
+            box-shadow: 0 6px 18px var(--shadow-color);
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55), background 0.5s ease-in-out;
+            will-change: transform, background;
+        }
+
+        .petal-1 { top: 0; left: 50%; transform: translateX(-50%) rotate(-30deg); }
+        .petal-2 { top: 20px; right: -5px; transform: rotate(30deg); }
+        .petal-3 { bottom: 10px; right: 15px; transform: rotate(90deg); }
+        .petal-4 { bottom: 10px; left: 15px; transform: rotate(-90deg); }
+        .petal-5 { top: 20px; left: -5px; transform: rotate(-30deg); }
+
+
+        .flower.is-expanded .petal-1 { transform: translateX(-50%) rotate(-20deg) scale(1.1); }
+        .flower.is-expanded .petal-2 { transform: rotate(10deg) scale(1.1); }
+        .flower.is-expanded .petal-3 { transform: rotate(60deg) scale(1.1); }
+        .flower.is-expanded .petal-4 { transform: rotate(-60deg) scale(1.1); }
+        .flower.is-expanded .petal-5 { transform: rotate(-10deg) scale(1.1); }
+
+        .snoopy-float {
+            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.18));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translate(-50%, -100%) scale(0) rotate(0deg); opacity: 0; }
+            30% { transform: translate(-50%, 0%) scale(1) rotate(180deg); opacity: 1; }
+            100% { transform: translate(-50%, 1500%) scale(0.6) rotate(720deg); opacity: 0.5; }
+        }
+
+        .confetti-item {
+            position: absolute;
+            animation: confetti-fall var(--duration) linear forwards;
+            font-size: var(--size);
+            color: var(--color);
+            left: var(--x-pos);
+            animation-delay: var(--delay);
+            pointer-events: none;
+        }
+
+        /* --- Message Card Animation --- */
+        .message-card {
+            transform: translateX(100%);
+            opacity: 0;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease-in-out;
+        }
+        
+        .message-card.is-visible {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-fuchsia-50 min-h-screen flex items-center justify-center p-4">
+
+    <div class="card w-full max-w-5xl bg-white/50 backdrop-blur-md rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden ring-4 ring-pink-100">
+        
+        <div id="background-confetti" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+
+        <header class="flex flex-col md:flex-row items-center gap-4 mb-8">
+            <div class="text-5xl md:text-6xl text-red-500">🌹</div>
+            <div class="text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-bold font-lora text-pink-700 tracking-tight">Love Garden</h1>
+                <p class="text-lg text-pink-500 mt-2 font-lora italic">A special message just for my baby, Zammmmmmieeeee</p>
+            </div>
+        </header>
+
+        <main class="flex flex-col md:flex-row gap-12 items-center justify-center">
+            
+            <div class="left flex-1 flex flex-col items-center text-center">
+                <div id="flower" class="flower w-36 h-36 relative cursor-pointer transition-transform duration-500 hover:scale-105" title="Click me to reveal a message!">
+                    <div class="flower-petal petal-1"></div>
+                    <div class="flower-petal petal-2"></div>
+                    <div class="flower-petal petal-3"></div>
+                    <div class="flower-petal petal-4"></div>
+                    <div class="flower-petal petal-5"></div>
+                    
+                    <div id="flower-center" class="absolute inset-8 rounded-full bg-pink-100/80 backdrop-blur-lg flex items-center justify-center font-bold text-2xl text-pink-700 transition-all duration-300 transform p-2">
+                        <svg class="w-10 h-10" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                </div>
+                
+                <p id="instruction-text" class="text-sm md:text-base text-pink-600 mt-4 font-lora">
+                    Click the flower, baby, for a random messages!
+                </p>
+            </div>
+
+            <aside class="right w-full md:w-80 flex flex-col items-center text-center">
+                <img id="snoopy" class="snoopy-float w-44 md:w-56" src="snoopy.jfif" alt="Snoopy and Woodstock floating with hearts" />
+                <p class="text-sm md:text-base text-pink-500 mt-4 font-lora italic">
+                    Interact with this baby pag namiss mo ko. I'll keep updating the messages!!
+                </p>
+            </aside>
+        </main>
+
+        <div id="message-card" class="message-card absolute bottom-1/2 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-4/5 md:w-1/2 lg:w-1/3 bg-white p-6 rounded-2xl shadow-xl text-center z-10">
+            <p id="message-text" class="text-lg md:text-xl font-bold font-inter text-pink-700"></p>
+        </div>
+        
+        <footer class="absolute bottom-4 right-4 text-xs md:text-sm text-pink-500 font-lora">
+            Made with all my love - zzzzz.clyde 💌
+        </footer>
+    </div>
+    
+    <script>
+        // DOM Elements
+        const flower = document.getElementById('flower');
+        const backgroundConfetti = document.getElementById('background-confetti');
+        const instructionText = document.getElementById('instruction-text');
+        const messageCard = document.getElementById('message-card');
+        const messageText = document.getElementById('message-text');
+        
+        const messages = [
+            "Hi beautiful!",
+            "Just a reminder: baby miss ta ka everyday!",
+            "Give me huggies please!",
+            "I love uuu soo much my yellow dino.",
+            "Hi gorgeous! ❤️",
+            "kitaay na ta please.",
+            "i loveeee youuuu baby.",
+            "i miss youuuu zammm",
+            "I'll be there when you're insecure, let you know that you're always lovely, baby",
+            "I'll pray to God every day to keep you forever"
+        ];
+        
+        let messageTimeout;
+        const createConfettiItem = (type, isBurst = false) => {
+            const el = document.createElement('div');
+            el.className = `confetti-item ${isBurst ? 'animate-[fall_1.5s_ease-out_forwards]' : ''}`;
+            el.textContent = type;
+            el.style.setProperty('--size', `${Math.random() * 1.5 + 0.8}rem`);
+            el.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
+            el.style.setProperty('--x-pos', `${Math.random() * 100}vw`);
+            el.style.setProperty('--delay', `${Math.random() * 2}s`);
+            return el;
+        };
+        
+        const generateBackgroundConfetti = () => {
+            const types = ['❤️', '✨', '💖', '⭐', '💌'];
+            for (let i = 0; i < 30; i++) {
+                const type = types[Math.floor(Math.random() * types.length)];
+                const item = createConfettiItem(type);
+                backgroundConfetti.appendChild(item);
+            }
+        };
+
+        const generateBurstConfetti = (count, startX, startY) => {
+            const types = ['❤️', '💖', '✨'];
+            for (let i = 0; i < count; i++) {
+                const type = types[Math.floor(Math.random() * types.length)];
+                const el = document.createElement('div');
+                el.textContent = type;
+                el.className = 'absolute text-red-500 animate-[fall_1.5s_ease-out_forwards]';
+                el.style.left = `${startX + (Math.random() * 80 - 40)}px`;
+                el.style.top = `${startY + (Math.random() * 40 - 20)}px`;
+                el.style.fontSize = `${Math.floor(12 + Math.random() * 20)}px`;
+                
+                backgroundConfetti.appendChild(el);
+                setTimeout(() => el.remove(), 1500);
+            }
+        };
+
+        // --- INTERACTIVITY ---
+        function resetFlower() {
+            clearTimeout(messageTimeout);
+            
+            // Hide the message card and reset flower animation
+            messageCard.classList.remove('is-visible');
+            flower.classList.remove('is-expanded');
+            
+            instructionText.textContent = "Click the flower, baby, for a random message!";
+        }
+
+        flower.addEventListener('click', (event) => {
+            // Get a random message and display it
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            const randomMessage = messages[randomIndex];
+            
+            // Set the message text and make the card visible
+            messageText.textContent = randomMessage;
+            messageCard.classList.add('is-visible');
+
+            // Toggle the flower's 'bloomed' state
+            flower.classList.add('is-expanded');
+            
+            // Get click coordinates to spawn confetti
+            const rect = backgroundConfetti.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            generateBurstConfetti(15, x, y);
+
+            // Change instruction text and set a timer to revert
+            instructionText.textContent = "Aww! It's so cute!";
+            
+            clearTimeout(messageTimeout);
+            messageTimeout = setTimeout(resetFlower, 5000);
+        });
+
+        // Initial setup
+        document.addEventListener('DOMContentLoaded', () => {
+            generateBackgroundConfetti();
+        });
+    </script>
+</body>
+</html>
